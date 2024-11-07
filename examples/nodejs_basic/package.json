@@ -1,0 +1,6 @@
+{
+  "name": "@workspace/examples",
+  "dependencies": {
+    "@alshdavid/fs": "*"
+  }
+}

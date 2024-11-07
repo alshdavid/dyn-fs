@@ -1,0 +1,8 @@
+/target
+node_modules
+*.node
+package-lock.json
+/javascript/**/*.mjs
+/javascript/**/*.js
+/javascript/**/*.cjs
+/javascript/**/*.d.*
