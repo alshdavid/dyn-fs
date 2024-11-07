@@ -1,0 +1,56 @@
+use std::fs;
+use std::time::SystemTime;
+
+use super::OsFileType;
+use super::OsPermissions;
+use crate::sync::FileType;
+use crate::sync::Metadata;
+use crate::sync::Permissions;
+
+pub struct OsMetadata(fs::Metadata);
+
+impl From<fs::Metadata> for OsMetadata {
+  fn from(value: fs::Metadata) -> Self {
+    Self(value)
+  }
+}
+
+impl Metadata for OsMetadata {
+  fn accessed(&self) -> std::io::Result<SystemTime> {
+    self.0.accessed()
+  }
+
+  fn created(&self) -> std::io::Result<SystemTime> {
+    self.0.created()
+  }
+
+  fn file_type(&self) -> Box<dyn FileType> {
+    let file_type = self.0.file_type();
+    Box::new(OsFileType::from(file_type))
+  }
+
+  fn is_dir(&self) -> bool {
+    self.0.is_dir()
+  }
+
+  fn is_file(&self) -> bool {
+    self.0.is_file()
+  }
+
+  fn is_symlink(&self) -> bool {
+    self.0.is_symlink()
+  }
+
+  fn modified(&self) -> std::io::Result<SystemTime> {
+    self.0.modified()
+  }
+
+  fn permissions(&self) -> Box<dyn Permissions> {
+    let permissions = self.0.permissions();
+    Box::new(OsPermissions::from(permissions))
+  }
+
+  fn len(&self) -> u64 {
+    self.0.len()
+  }
+}
