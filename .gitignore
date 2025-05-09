@@ -2,3 +2,7 @@
 node_modules
 *.node
 package-lock.json
+npm/**/*.mjs
+/npm/**/*.js
+/npm/**/*.cjs
+/npm/**/*.d.*

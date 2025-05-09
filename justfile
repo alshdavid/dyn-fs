@@ -54,6 +54,10 @@ else \
 build:
   cargo build {{profile_cargo}} {{target_cargo}}
   cp "./target/{{target}}/{{profile}}/libdyn_fs_napi.so" "./npm/fs-rs/{{target}}.node"
+  cd "./npm/fs-rs" && npx tsc
 
 [windows]
 build:
+
+run_node:
+  @node --experimental-strip-types --conditions="fs-rs::sources" --disable-warning=ExperimentalWarning ./examples/nodejs_basic/index.mts

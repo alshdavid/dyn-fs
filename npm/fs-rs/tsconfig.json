@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "declaration": true,
+    "target": "ESNext",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "allowImportingTsExtensions": true,
+    "rewriteRelativeImportExtensions": true
+  },
+  "include": ["./**/*.mts"],
+  "exclude": ["./**/*.d.ts", "./**/*.js"],
+}

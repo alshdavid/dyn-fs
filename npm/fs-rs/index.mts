@@ -1,4 +1,4 @@
-import napi from './load.mjs'
+import napi from './load.mts'
 
 export class OsFileSystem {
   #ref
@@ -6,7 +6,7 @@ export class OsFileSystem {
     this.#ref = napi.new_os_file_system()
   }
 
-  read(path) {
+  read(path: string) {
     return napi.read(path)
   }
 }
