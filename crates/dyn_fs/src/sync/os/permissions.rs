@@ -2,7 +2,7 @@ use std::fs;
 #[cfg(target_family = "unix")]
 use std::os::unix::fs::PermissionsExt;
 
-use crate::sync::Permissions;
+use crate::file_system::Permissions;
 
 pub struct OsPermissions(fs::Permissions);
 

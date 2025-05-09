@@ -1,4 +1,4 @@
-use crate::sync::Metadata;
+use crate::file_system::Metadata;
 
 pub struct MemoryMetadata {
   pub(super) inner_is_file: bool,
@@ -22,7 +22,7 @@ impl Metadata for MemoryMetadata {
     todo!()
   }
 
-  fn file_type(&self) -> Box<dyn crate::sync::FileType> {
+  fn file_type(&self) -> Box<dyn crate::file_system::FileType> {
     todo!()
   }
 
@@ -34,7 +34,7 @@ impl Metadata for MemoryMetadata {
     todo!()
   }
 
-  fn permissions(&self) -> Box<dyn crate::sync::Permissions> {
+  fn permissions(&self) -> Box<dyn crate::file_system::Permissions> {
     todo!()
   }
 

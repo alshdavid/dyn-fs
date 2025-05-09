@@ -3,9 +3,9 @@ use std::time::SystemTime;
 
 use super::OsFileType;
 use super::OsPermissions;
-use crate::sync::FileType;
-use crate::sync::Metadata;
-use crate::sync::Permissions;
+use crate::file_system::FileType;
+use crate::file_system::Metadata;
+use crate::file_system::Permissions;
 
 pub struct OsMetadata(fs::Metadata);
 

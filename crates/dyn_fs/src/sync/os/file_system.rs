@@ -5,10 +5,10 @@ use std::path::Path;
 use std::path::PathBuf;
 
 use super::OsMetadata;
-use crate::sync::File;
-use crate::sync::FileSystem;
-use crate::sync::Metadata;
-use crate::sync::Permissions;
+use crate::file_system::File;
+use crate::file_system::FileSystem;
+use crate::file_system::Metadata;
+use crate::file_system::Permissions;
 
 #[derive(Default, Debug, Clone)]
 pub struct OsFileSystem;

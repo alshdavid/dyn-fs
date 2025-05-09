@@ -11,9 +11,9 @@ use std::sync::RwLockWriteGuard;
 use normalize_path::NormalizePath;
 
 use super::MemoryMetadata;
-use crate::sync::File;
-use crate::sync::FileSystem;
-use crate::sync::Metadata;
+use crate::file_system::File;
+use crate::file_system::FileSystem;
+use crate::file_system::Metadata;
 
 #[derive(Debug)]
 enum Entry {
@@ -206,7 +206,7 @@ impl FileSystem for MemoryFileSystem {
   fn set_permissions(
     &self,
     _path: &Path,
-    _perm: &dyn crate::sync::Permissions,
+    _perm: &dyn crate::file_system::Permissions,
   ) -> io::Result<()> {
     todo!()
   }

@@ -1,6 +1,6 @@
 use std::fs;
 
-use crate::sync::FileType;
+use crate::file_system::FileType;
 
 pub struct OsFileType(fs::FileType);
 

@@ -9,7 +9,7 @@ use std::path::Path;
 use std::path::PathBuf;
 use std::time::SystemTime;
 
-pub trait FileSystem: Default + Send + Sync + Clone {
+pub trait FileSystem: Send + Sync {
   fn open(
     &self,
     path: &Path,

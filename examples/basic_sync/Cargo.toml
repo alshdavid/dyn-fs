@@ -1,0 +1,11 @@
+[package]
+name = "basic_sync"
+version = "0.0.1"
+edition = "2024"
+
+[[bin]]
+name = "basic_sync"
+path = "./main.rs"
+
+[dependencies]
+dyn_fs = { path = "../../crates/dyn_fs" }

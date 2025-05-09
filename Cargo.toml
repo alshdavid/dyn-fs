@@ -1,11 +1,7 @@
-[package]
-name = "ifilesystem"
-version = "0.1.0"
-edition = "2021"
-authors = ["alshdavid"]
-repository = "https://github.com/alshdavid/ifilesystem"
-description = "Bundler For The Modern Web"
-license = "MIT"
+[workspace]
+resolver = "2"
 
-[dependencies]
-normalize-path = "0.2"
+members = [
+  "./crates/*",
+  "./examples/*",
+]
