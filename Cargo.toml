@@ -3,5 +3,5 @@ resolver = "2"
 
 members = [
   "./crates/*",
-  "./examples/*",
+  "./examples/basic_sync",
 ]

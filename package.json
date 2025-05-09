@@ -1,0 +1,10 @@
+{
+  "name": "@workspace/root",
+  "version": "0.0.1-local",
+  "private": true,
+  "workspaces": [
+    "./crates/*",
+    "./examples/*",
+    "./scripts"
+  ]
+}

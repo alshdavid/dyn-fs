@@ -1,0 +1,8 @@
+{
+  "name": "fs-rs",
+  "version": "0.0.1",
+  "main": "./index.mjs",
+  "devDependencies": {
+    "@napi-rs/cli": "^2.18.4"
+  }
+}
