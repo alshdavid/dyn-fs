@@ -51,9 +51,15 @@ else \
   { "--target " + target } 
 
 [unix]
-build:
+build: build_rs build_ts
+
+[unix]
+build_rs:
   cargo build {{profile_cargo}} {{target_cargo}}
   cp "./target/{{target}}/{{profile}}/libdyn_fs_napi.so" "./npm/fs-rs/{{target}}.node"
+
+[unix]
+build_ts:
   cd "./npm/fs-rs" && npx tsc
 
 [windows]

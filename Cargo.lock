@@ -51,14 +51,14 @@ dependencies = [
 
 [[package]]
 name = "dyn_fs"
-version = "0.0.1"
+version = "0.0.1-local"
 dependencies = [
  "normalize-path",
 ]
 
 [[package]]
 name = "dyn_fs_napi"
-version = "0.0.1"
+version = "0.0.0-local"
 dependencies = [
  "dyn_fs",
  "napi",

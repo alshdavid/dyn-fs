@@ -1,0 +1,111 @@
+name: Release
+
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+
+on:
+  push:
+    branches:
+      - "main"
+
+jobs:
+  vars:
+    name: "📋 Generate Variables"
+    runs-on: ubuntu-24.04
+    outputs:
+      tag: ${{ steps.tag.outputs.tag }}
+    steps:
+      - id: tag
+        run: |
+          declare -i var=$(npm info @alshdavid/fs version | cut -d "." -f 3)
+          var=$var+1
+          echo TAG: 0.0.$var
+          echo "tag=0.0.$var" >> "$GITHUB_OUTPUT"
+
+  build:
+    strategy:
+      matrix:
+        config:
+          - name: 🐥 Linux AMD64
+            os: linux
+            arch: amd64
+            runner: ubuntu-24.04
+
+          - name: 🐥 Linux ARM64
+            os: linux
+            arch: arm64
+            runner: ubuntu-24.04-arm
+
+          - name: 🍎 MacOS AMD64
+            os: macos
+            arch: amd64
+            runner: macos-13
+
+          - name: 🍎 MacOS ARM64
+            os: macos
+            arch: arm64
+            runner: macos-15
+
+          - name: 🟦 Windows AMD64
+            os: windows
+            arch: amd64
+            runner: windows-latest
+
+          - name: 🟦 Windows ARM64
+            os: windows
+            arch: arm64
+            runner: windows-latest
+            run: rustup target add aarch64-pc-windows-msvc
+
+    name: ${{ matrix.config.name }}
+    runs-on: ${{ matrix.config.runner }}
+    env:
+      TAG: ${{needs.vars.outputs.tag}}
+    needs:
+      - vars
+    steps:
+      - { uses: actions/checkout@v4, with: { submodules: true } }
+      - run: . ./.github/install-scripts/just/main.ps1
+      - run: . ./.github/install-scripts/nodejs/main.ps1
+      - run: . ./.github/install-scripts/rust/main.ps1
+      - if: matrix.config.run
+        run: ${{ matrix.config.run }}
+      - run: node .github/scripts/string-replace.mjs ./crates/dyn_fs/Cargo.toml "0.0.0-local" "$env:TAG"
+      - env:
+          os: "${{ matrix.config.os }}"
+          arch: "${{ matrix.config.arch }}"
+          profile: "release"
+        run: just build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: npm-${{ matrix.config.os }}-${{ matrix.config.arch }}
+          path: ${{ github.workspace }}/npm/${{ matrix.config.os }}-${{ matrix.config.arch }}/**/*
+          if-no-files-found: error
+          retention-days: 1
+
+  publish-npm-package:
+    name: "🔄 Publish NPM Package"
+    runs-on: ubuntu-24.04
+    needs:
+      - vars
+      - build
+    steps:
+      - uses: actions/checkout@v4
+      - run: . ./.github/install-scripts/nodejs/main.ps1
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: npm-*
+          path: npm
+          merge-multiple: true
+      - env:
+          TAG: ${{needs.vars.outputs.tag}}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> $HOME/.npmrc
+          node .github/scripts/string-replace.mjs ./npm/fs-rs/package.json "0.0.0-local" "$env:TAG"
+          echo "Tag: ${TAG}"
+          cp ./README.md ./npm/README.md
+          cd npm
+          echo "$TAG" > tag
+          npm publish --access=public

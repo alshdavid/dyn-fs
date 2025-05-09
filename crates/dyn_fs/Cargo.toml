@@ -1,6 +1,6 @@
 [package]
 name = "dyn_fs"
-version = "0.0.1"
+version = "0.0.1-local"
 edition = "2021"
 authors = ["alshdavid"]
 repository = "https://github.com/alshdavid/dyn-fs"
